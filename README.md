@@ -11,8 +11,8 @@ kanji_helper
 ・日程調整  
 ・お店選び  
 ・リマインド・インバイトの自動化  
-	・Slack(API)  
-	・Mail(API)  
+    ・Slack(API)  
+    ・Mail(API)  
 ・天気情報(API)  
 ・優先度の設定  
 ・日程入力期限の指定  
