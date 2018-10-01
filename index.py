@@ -8,7 +8,6 @@ def index():
 
 @app.route('/create_room', methods=['POST'])
 def get_teams_member():
-    print("OK")
     data="OK"
     return data
 
