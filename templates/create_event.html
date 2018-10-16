@@ -5,42 +5,40 @@
 <div class="container">
   <h1>Create Event</h1>
   <div input-form>
-    <form action="" method="post">
-      <ul style="list-style:none;">
-        <li>
-          <label>イベント名：</label>
-          <input type="text" name="event_name" value="">
-        </li>
-        <li>
-          <label>開催候補日：</label>
-          <input type="date" name="date">
-          <label>開催時間：</label>
-          <input type="time" name="time">～
-          <input type="time" name="time">
-        </li>
-        <li>
-          <label>開催エリア：</label>
-          <input type="text" name="area">
-        </li>
-        <li>
-          <label>Teams Room：</label>
-          <input id="teams_id" type="text" name="atendees" placeholder="新規作成するTeams Room名。">
-          <label>参加者名：</label>
-          <input id="candidate_name" type="text" name="area">
-          <label>参加者E-mail：</label>
-          <input id="candidate_email" type="text" name="area">
-          <input id="add_member" type="button" value="メンバー追加" onclick="">
-          <input id="create_room" type="button" value="Room 作成" onclick="">
-        </li>
-        <li>
-          <label>インバイトメッセージ：</label>
-          <textarea cols="" rows=""></textarea>
-        </li>
-        <li>
-          <input type="submit" name="submit-button" value="送信&インバイト">
-        </li>
-      </ul>
-    </form>
+    <ul style="list-style:none;">
+      <li>
+        <label>イベント名：</label>
+        <input type="text" name="event_name" value="">
+      </li>
+      <li>
+        <label>開催候補日：</label>
+        <input type="date" name="date">
+        <label>開催時間：</label>
+        <input type="time" name="time">～
+        <input type="time" name="time">
+      </li>
+      <li>
+        <label>開催エリア：</label>
+        <input type="text" name="area">
+      </li>
+      <li>
+        <label>Teams Room：</label>
+        <input id="teams_id" type="text" name="atendees" placeholder="新規作成するTeams Room名。">
+        <label>参加者名：</label>
+        <input id="candidate_name" type="text" name="area">
+        <label>参加者E-mail：</label>
+        <input id="candidate_email" type="text" name="area">
+        <input id="add_member" type="button" value="メンバー追加" onclick="">
+        <input id="create_room" type="button" value="Room 作成" onclick="">
+      </li>
+      <li>
+        <label>インバイトメッセージ：</label>
+        <textarea cols="" rows=""></textarea>
+      </li>
+      <li>
+        <input id="create_event" type="button" value="送信&インバイト" onclick="">
+      </li>
+    </ul>
   </div>
   <div style="border:solid">
     参加候補者一覧
@@ -54,12 +52,11 @@
   </div>
 </div>
 
-<script>
 
+<script>
 $(function(){
     //「メンバー追加」ボタン押下時の挙動
     $('#add_member').on("click",function(){
-        // $(".show_room").css("display","none");
         candidate = $("#candidate_name").val();
         candidate_email = $("#candidate_email").val();
         $('#candidate').append('<tr><td>'+ candidate + '</td><td>' + candidate_email + '</td><td contentEditable=true>3</td></tr>');
@@ -72,7 +69,6 @@ $(function(){
         header[1] = "email";
         header[2] = "weight";
 
-
         var mamber_info_list = new Array();
         var member_info_dict = {};
 
@@ -82,30 +78,18 @@ $(function(){
 		               if( typeof data[i] == "undefined" )
 			                data[i] = [];
 		                  data[i][j] = cells.eq(j).text();//i行目j列の文字列を取得
-                      // alert(header[j]);
-                      // console.log(header[j]);
                       test = header[j]
 
                       member_info_dict[header[j]] = data[i][j];
-
-                      // console.log(member_info_dict)
-                      // console.log(member_info_dict[test]);
-                      // member_info_dict[j] = data[i][j];
-                      // alert(member_info_dict[header[j]]);
-                      // alert(data[i][j])
 	             }
                mamber_info_list.push(member_info_dict);
         }
-        console.log(mamber_info_list)
-
     });
 })
 
 // 「Room作成ボタン」押下時モック
 $(function(){
     $('#create_room').on("click",function(){
-        // $(".show_room").css("display","none");
-        // var teams_id = $("#teams_id").val();
         $.ajax({
             url: "/create_room",
             type: 'POST',
@@ -124,35 +108,20 @@ $(function(){
             timeout: 15000,
         }).done(function(data){
             if(data.result){
-                // $("#room_url").text(data.url);
-                // $("#room_url").attr("href",data.url);
-                // $(".show_room").show();
-                // $("#create_room").prop("disabled", true);
-                alert("get sccess status")
+                alert(data.message)
             }else{
-                alert("get fail status");
+                alert(data.message);
             }
         }).fail(function(error){
-            console.log(error);
-            alert("通信に失敗しました。");
+            alert("通信に失敗しました");
         });
     });
-    // var clipboard = new Clipboard('.btn');
-    //
-    // $("#room_name").on("change keyup", function() {
-    //     if (!$("#room_name").val()){
-    //       $("#create_room").prop("disabled", true);
-    //     } else {
-    //       $("#create_room").prop("disabled", false);
-    //     }
-    // });
 })
 
 
 // 「送信&インバイト」ボタン押下時モック
 $(function(){
     $('#create_event').on("click",function(){
-        // $(".show_room").css("display","none");
         var teams_id = $("#teams_id").val();
         $.ajax({
             url: "/create_event",
@@ -188,34 +157,16 @@ $(function(){
             timeout: 15000,
         }).done(function(data){
             if(data.result){
-                // $("#room_url").text(data.url);
-                // $("#room_url").attr("href",data.url);
-                // $(".show_room").show();
-                // $("#create_room").prop("disabled", true);
-                alert("get sccess status")
+                alert(data.message)
             }else{
-                alert("get fail status");
+                alert(data.message);
             }
         }).fail(function(error){
-            alert("通信に失敗しました。");
+            alert("通信に失敗しました");
         });
     });
-    // var clipboard = new Clipboard('.btn');
-    //
-    // $("#room_name").on("change keyup", function() {
-    //     if (!$("#room_name").val()){
-    //       $("#create_room").prop("disabled", true);
-    //     } else {
-    //       $("#create_room").prop("disabled", false);
-    //     }
-    // });
 })
-
-
-
-
 </script>
-
 
 
 {% endblock %}
