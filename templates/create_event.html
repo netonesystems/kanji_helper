@@ -4,6 +4,8 @@
 <div class="header"></div>
 <div class="container">
   <h1>Create Event</h1>
+  <h3 id="teams_id_created" style="text-align:right"></h3>
+  <h3 id="event_url" style="text-align:right"></h3>
   <div input-form>
     <ul style="list-style:none;">
       <li>
@@ -108,7 +110,8 @@ $(function(){
             timeout: 15000,
         }).done(function(data){
             if(data.result){
-                alert(data.message)
+                alert(data.message);
+                $("#teams_id_created").text("RoomID : " + data.roomid);
             }else{
                 alert(data.message);
             }
@@ -157,7 +160,8 @@ $(function(){
             timeout: 15000,
         }).done(function(data){
             if(data.result){
-                alert(data.message)
+                alert(data.message);
+                $("#event_url").text("Event URL : " + data.URL);
             }else{
                 alert(data.message);
             }
